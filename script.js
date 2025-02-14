@@ -202,7 +202,7 @@ downloadBtn.addEventListener('click', async () => {
 
 const shareTwitterBtn = document.querySelector('.share-twitter-btn');
 shareTwitterBtn.addEventListener('click', () => {
-  const tweetText = encodeURIComponent('🚫 Created with @SensitiveContentDog\n\n#SensitiveContent $SENSE');
+  const tweetText = encodeURIComponent('Too cute for the naked eye');
   window.open(`https://twitter.com/intent/tweet?text=${tweetText}`, '_blank');
 });
 // Mouse event handlers
