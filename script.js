@@ -76,14 +76,16 @@ function calculateImageDimensions(image, canvasSize) {
   
 // When loading the overlay image, add crossOrigin attribute
 function drawMeme() {
+  // Add padding to prevent white edges
+  const padding = 100; // Adjust this value as needed
+  
   // Clear the canvas first
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width + padding * 2, canvas.height + padding * 2);
   
-  // Draw black background first
+  // Draw black background with padding
   ctx.fillStyle = '#000000';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(-padding, -padding, canvas.width + padding * 2, canvas.height + padding * 2);
   
-  // If no image uploaded, just leave the black background
   if (!uploadedImage) return;
   
   ctx.save();
@@ -93,22 +95,25 @@ function drawMeme() {
   
   const uploadedDimensions = calculateImageDimensions(uploadedImage, canvas.width);
   
+  // Extend blur slightly beyond image edges
   ctx.filter = 'blur(50px)';
   try {
+    // Draw image slightly larger to account for blur edges
+    const extraSize = 50; // For blur overflow
     ctx.drawImage(
       uploadedImage,
-      -uploadedDimensions.width/2 + position.x,
-      -uploadedDimensions.height/2 + position.y,
-      uploadedDimensions.width,
-      uploadedDimensions.height
+      -uploadedDimensions.width/2 + position.x - extraSize,
+      -uploadedDimensions.height/2 + position.y - extraSize,
+      uploadedDimensions.width + extraSize * 2,
+      uploadedDimensions.height + extraSize * 2
     );
     
     ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
     ctx.fillRect(
-      -uploadedDimensions.width/2 + position.x,
-      -uploadedDimensions.height/2 + position.y,
-      uploadedDimensions.width,
-      uploadedDimensions.height
+      -uploadedDimensions.width/2 + position.x - extraSize,
+      -uploadedDimensions.height/2 + position.y - extraSize,
+      uploadedDimensions.width + extraSize * 2,
+      uploadedDimensions.height + extraSize * 2
     );
   } catch (error) {
     console.error('Error drawing image:', error);
