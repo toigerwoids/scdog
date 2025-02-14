@@ -76,9 +76,16 @@ function calculateImageDimensions(image, canvasSize) {
   
 // When loading the overlay image, add crossOrigin attribute
 function drawMeme() {
+  // Clear the canvas first
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Draw black background first
+  ctx.fillStyle = '#000000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // If no image uploaded, just leave the black background
   if (!uploadedImage) return;
   
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.save();
   ctx.translate(canvas.width/2, canvas.height/2);
   ctx.rotate(rotationControl.value * Math.PI / 180);
@@ -110,7 +117,7 @@ function drawMeme() {
   ctx.restore();
   
   const overlayImage = new Image();
-  overlayImage.crossOrigin = "anonymous";  // Add this line
+  overlayImage.crossOrigin = "anonymous";
   overlayImage.onload = () => {
     const overlayDimensions = calculateImageDimensions(overlayImage, canvas.width);
     ctx.drawImage(
