@@ -133,7 +133,7 @@ downloadBtn.addEventListener('click', async () => {
   try {
     console.log('Starting overlay image load...');
     const overlayImage = new Image();
-    overlayImage.crossOrigin = "anonymous";  // Add this line
+    overlayImage.crossOrigin = "anonymous";
     
     await new Promise((resolve, reject) => {
       overlayImage.onload = resolve;
@@ -141,7 +141,6 @@ downloadBtn.addEventListener('click', async () => {
       overlayImage.src = 'https://i.ibb.co/83FmfHD/Sensitive-content-14.png';
     });
 
-    // Rest of your download code...
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
     ctx.translate(canvas.width/2, canvas.height/2);
@@ -179,16 +178,17 @@ downloadBtn.addEventListener('click', async () => {
     );
 
     const blob = await new Promise((resolve, reject) => {
+      // Changed to JPEG with quality 0.9
       canvas.toBlob((b) => {
         if (b) resolve(b);
         else reject(new Error('Blob creation failed'));
-      }, 'image/png');
+      }, 'image/jpeg', 0.9);  // Changed MIME type to JPEG and added quality parameter
     });
     
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'sensitive-content-meme.png';
+    link.download = 'sensitive-content-meme.jpg';  // Changed file extension to .jpg
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
