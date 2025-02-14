@@ -1,5 +1,5 @@
 function copyContract() {
-  const contractAddress = "0x742d35Cc6634C0532925a3b844Bc454e4438f44e";
+  const contractAddress = "CCUrxKaX2KA7tTAXfnjaGVSpt8Svqp4yrtiaT4zqpump";
   navigator.clipboard.writeText(contractAddress).then(() => {
     const notification = document.getElementById('copyNotification');
     notification.classList.add('show');
